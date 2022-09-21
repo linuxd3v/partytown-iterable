@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Partytown Test Page" />
+    <title>Iterable bug</title>
+    <script>
+      partytown = {
+        logCalls: true,
+        logGetters: true,
+        logSetters: true,
+        logStackTraces: false,
+        logScriptExecution: true,
+      };
+    </script>
+    <script src="/~partytown/debug/partytown.js"></script>
+  </head>
+  <body>
+    <h1>Iterable bug</h1>
+    <div id="iterable"></div>
+    <script>
+        function isIterable(obj) {
+            if (obj == null) {
+              return false;
+            }
+            return typeof obj[Symbol.iterator] === 'function';
+        }
+        //Object is iterable without partytown
+        console.log('isIterable', isIterable(document.body.classList));
+    </script>
+
+    <script type="text/partytown">
+        //this will throw exception
+        const bodyClassValues = [...document.body.classList];
+    </script>
+
+    <hr />
+    <hr />
+  </body>
+</html>
